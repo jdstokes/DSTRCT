@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Voxel
 {
-    public int X;
-    public int Y;
-    public int Z;
+    public float X;
+    public float Y;
+    public float Z;
 
-    public Voxel(int x, int y, int z)
+    public Voxel(float x, float y, float z)
     {
         X = x;
         Y = y;
         Z = z;
-        Debug.Log("New voxel created: " + x + "," + y + "," + z);
     }
 }
