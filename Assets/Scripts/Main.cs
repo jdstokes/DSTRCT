@@ -36,16 +36,24 @@ public class Main : MonoBehaviour
     public int numberOfDistractors = 1;
     public float trialTime = 1f;
     public float itiTime = 1f;
+    public int numberOfBlocks = 1;
+
+    [Header("Experiment Data")]
+    public int trialCount;
+    public int blockCount;
 
     [Header("Object Settings")]
     public GameObject distractor;
 
-
+    //
     private List<Grid> _gridList;
+    private List<GameObject> _distractorList;
+
+    //
+    enum TrialState {PreStart,Start,End,PostEnd}
 
     public void StartExperiment()
     {
-
         // Setup grid
         Vector3 startPosition = playerTransform.position;
         startPosition.z = startPosition.z + distanceFromPlayer;
@@ -53,27 +61,83 @@ public class Main : MonoBehaviour
                 startPosition, x, y, z, numberOfVoxels);
 
         //Start Block
-        StartTask();
+        StartCoroutine(StartTask());
     }
+
 
 
     IEnumerator StartTask()
     {
-        for(int i = 0; i<numberOfTrials; i++)
+        for(int i = 0; i< numberOfTrials; i++)
         {
-            SpawnDistractors();
+            StartCoroutine(SpawnDistractors());
             yield return new WaitForSeconds(trialTime);
-            DestroyDistractors();
+            StartCoroutine(DestroyDistractors());
             yield return new WaitForSeconds(itiTime);
         }
+    }
 
+    IEnumerator RunBlocks()
+    {
+        blockCount = 0;
+        while (blockCount < numberOfBlocks)
+        {
+            yield return StartCoroutine(SetUpBlock());
+            yield return StartCoroutine(StartBlock());
+            yield return StartCoroutine(EndBlock());
+            blockCount++;
+            yield return null;
+        }
+    }
+
+    IEnumerator RunTrials()
+    {
+        while (trialCount < numberOfBlocks)
+        {
+            yield return StartCoroutine(SetUpTrial());
+            yield return StartCoroutine(StartTrial());
+            yield return StartCoroutine(EndTrial());
+            trialCount++;
+            yield return null;
+        }
+    }
+
+    IEnumerator SetUpTrial()
+    {
+        yield return null;
+    }
+
+    IEnumerator StartTrial()
+    {
+        StartCoroutine(SpawnDistractors());
+        yield return null;
+    }
+
+    IEnumerator EndTrial()
+    {
+        StartCoroutine(DestroyDistractors());
+        yield return null;
+    }
+
+    IEnumerator SetUpBlock()
+    {
+        yield return null;
+    }
+
+    IEnumerator StartBlock()
+    {
+        yield return null;
+    }
+
+    IEnumerator EndBlock()
+    {
+        yield return null;
     }
 
     IEnumerator SpawnDistractors()
     {
-
-        int rb = UnityEngine.Random.Range(0, _gridList.Count);
-        Grid grid = _gridList[rb];
+        _distractorList = new List<GameObject>();
+        Grid grid = SelectGrid();
         for (int i = 0; i < numberOfDistractors; i++)
         {
             int rv = UnityEngine.Random.Range(0, grid.VoxelList.Count);
@@ -86,8 +150,19 @@ public class Main : MonoBehaviour
         yield return null;
     }
 
+    private Grid SelectGrid()
+    {
+        int rb = UnityEngine.Random.Range(0, _gridList.Count);
+        return _gridList[rb];
+    }
+
+
     IEnumerator DestroyDistractors()
     {
+        foreach (var distractor in _distractorList)
+        {
+            Destroy(distractor);
+        }
         Debug.Log("Kill Distractors");
         yield return null;
     }
