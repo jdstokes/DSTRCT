@@ -14,8 +14,8 @@ public class CountDownTaskTrigger : TaskTrigger
 
     IEnumerator Waittime(Action trigger)
     {
+        Debug.Log("count down trigger called");
         yield return new WaitForSeconds(countDownTime);
         trigger();
-        Debug.Log("count down trigger called");
     }
 }

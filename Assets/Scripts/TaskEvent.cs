@@ -13,7 +13,7 @@ public class TaskEvent : MonoBehaviour
 
     public void StartEvent(Action nextEvent)
     {
-        onEndTrigger += nextEvent;
+        onEndTrigger = nextEvent;
         eventStarted.Invoke();
         ActivateEndTrigger();
     }

@@ -7,10 +7,8 @@ public class Trial : MonoBehaviour
 {
     public List<TaskEvent> trialEvents = new List<TaskEvent>();
     public Action eventEnd;
-    public Action endTrials;
+    public Action trialEnd;
     private int eventCnt;
-    private int trialCnt;
-    private int numberOftrials;
 
     private void OnEnable()
     {
@@ -23,16 +21,15 @@ public class Trial : MonoBehaviour
     }
 
 
-    public void StartTrials(Action end, int numTrials)
+    public void StartTrial(Action trialEnd)
     {
-        endTrials = end;
-        numberOftrials = numTrials;
-        trialCnt = 0;
+        this.trialEnd = trialEnd;
         RunTrial();
     }
 
     public void RunTrial()
     {
+        Debug.Log("Trial started");
         eventCnt = 0;
         RunEvent();
     }
@@ -53,13 +50,9 @@ public class Trial : MonoBehaviour
 
             RunEvent();
         }
-        else if(trialCnt < numberOftrials)
+        else
         {
-                trialCnt++;
-                RunTrial();
-        }
-        else {
-            endTrials();
+            trialEnd();
         }
     }
 }

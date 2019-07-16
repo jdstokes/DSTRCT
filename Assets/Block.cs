@@ -5,12 +5,10 @@ using System;
 
 public class Block : MonoBehaviour
 {
-    int numberOfTrials = 3;
     int cnt;
     public List<TaskEvent> blockEvents = new List<TaskEvent>();
     public Action eventEnd;
-    public Action onTrialsEnd;
-    public Trial trials;
+    public Action blockEnd;
 
     private void OnEnable()
     {
@@ -23,8 +21,10 @@ public class Block : MonoBehaviour
     }
 
 
-    public void StartBlock()
+    public void StartBlock(Action blockEnd)
     {
+        Debug.Log("Block started");
+        this.blockEnd = blockEnd;
         cnt = 0;
         RunEvent();
     }
@@ -46,14 +46,8 @@ public class Block : MonoBehaviour
         }
         else
         {
-            Debug.Log("End");
+            blockEnd();
         }
-    }
-
-    public void RunBlockTrials()
-    {
-        Debug.Log("Start trials");
-        trials.StartTrials(onTrialsEnd, numberOfTrials);
     }
 
 }
