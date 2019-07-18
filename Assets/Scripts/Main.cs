@@ -49,16 +49,14 @@ public class Main : MonoBehaviour
     private List<Grid> _gridList;
     private List<GameObject> _distractorList;
 
-    //
-    enum TrialState {PreStart,Start,End,PostEnd}
 
     public void StartExperiment()
     {
         // Setup grid
         Vector3 startPosition = playerTransform.position;
         startPosition.z = startPosition.z + distanceFromPlayer;
-        _gridList = GridController.Instance.BuildGrids(
-                startPosition, x, y, z, numberOfVoxels);
+        //_gridList = GridController.Instance.BuildGrids(
+        //        startPosition, x, y, z, numberOfVoxels);
 
         //Start Block
         StartCoroutine(StartTask());

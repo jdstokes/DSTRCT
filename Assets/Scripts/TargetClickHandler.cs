@@ -8,18 +8,8 @@ public class TargetClickHandler : MonoBehaviour, IPointerClickHandler
 {
     public void OnPointerClick(PointerEventData eventData)
     {
-        SceneManager.LoadScene("Distract");
+        Debug.Log("Target clicked");
+        InputController.Instance.TargetFound();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
