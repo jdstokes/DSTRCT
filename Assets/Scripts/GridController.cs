@@ -20,6 +20,7 @@ public class GridController : Singleton<GridController>
     public List<GameObject> regularDistractorList;
     public GameObject targetPrefab;
     private GameObject newTarget;
+    public GameObject fireDistractorPrefab;
 
     public IEnumerator SetupGridList()
     {
@@ -96,6 +97,25 @@ public class GridController : Singleton<GridController>
                 }
             }
         }
+    }
+
+    public void SpawnFireDistractor()
+    {
+        Grid grid = gridList[fireInd];
+        int cnt = 0;
+        while (cnt < numberOfDistractors)
+        {
+            int rv = UnityEngine.Random.Range(0, grid.VoxelList.Count);
+            Voxel voxel = grid.VoxelList[rv];
+            if (!voxel.isDistractor)
+            {
+                GameObject newDistractor = Instantiate(fireDistractorPrefab, new Vector3(voxel.X, voxel.Y, voxel.Z), Quaternion.identity);
+                grid.VoxelList[rv].isDistractor = true;
+                regularDistractorList.Add(newDistractor);
+                cnt++;
+            }
+        }
+
     }
 
     public void RemoveDistractors()
