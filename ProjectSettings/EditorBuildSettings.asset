@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Distract.unity
-    guid: 5112dc76af48bf94a8517b496de48334
+    path: Assets/Scenes/ExperimentTest.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     com.unity.xr.arcore.PlayerSettings: {fileID: 11400000, guid: 430069f2655446e47a40e903b0c1c96f,
       type: 2}
